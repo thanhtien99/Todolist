@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="taskEntry"
+            type="com.example.managework.mvvmtodolist.database.TaskEntry" />
+
+        <variable
+            name="clickListener"
+            type="com.example.managework.mvvmtodolist.ui.task.TaskClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:onClick="@{() -> clickListener.onClick(taskEntry)}">
+
+        <LinearLayout
+            android:id="@+id/row_background"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tilte_tasks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:text="Title"
+                    android:textStyle="bold"
+                    android:textColor="#F000"
+                    android:textSize="22sp"
+                    android:text="@{taskEntry.title}"
+                    />
+
+                <TextView
+                    android:id="@+id/desc_tasks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    tools:text="High"
+                    android:textColor="#ADADAD"
+                    android:textSize="16sp"
+                    app:setPriority="@{taskEntry.priority}"/>
+
+                <TextView
+                    android:id="@+id/date_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    tools:text="Tomorrow"
+                    android:textColor="#03A9F4"
+                    android:textSize="16sp"
+                    app:setTimestamp="@{taskEntry.timestamp}"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
