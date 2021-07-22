@@ -34,7 +34,25 @@ class AddFragment : Fragment(){
             resources.getStringArray(R.array.priorities)
         )
         binding.apply {
+            btnTimeline.setOnClickListener {
+                var now = Calendar.getInstance()
+                var datePicker =
+                    activity?.let { it1 ->
+                        DatePickerDialog(
+                            it1, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                                textdate.text = "$dayOfMonth/$month/$year"
+                            },
+                            now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+                    }
+                datePicker?.show()
 
+                //timepicker
+                var timePicker = TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                    texttime.text = "$hourOfDay:$minute"
+                },
+                    now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false)
+                timePicker.show()
+            }
             spinner.adapter = myAdapter
             btnAddTask.setOnClickListener {
                 if (TextUtils.isEmpty((addTitle.text))){
@@ -51,7 +69,6 @@ class AddFragment : Fragment(){
                     priority,
                     System.currentTimeMillis()
                 )
-
                 viewModel.insert(taskEntry)
                 Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addFragment_to_taskFragment)
@@ -64,3 +81,4 @@ class AddFragment : Fragment(){
 
 
 }
+
